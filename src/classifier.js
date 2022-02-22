@@ -89,44 +89,44 @@ function classifier(input) {
   return (outputs)
 }
 
-// Find age
-function findAge(year) {
-  const baseYear = 2019;
-  return baseYear - new Date(year).getFullYear()
+// get members age
+function findMembersAge(year) {
+  const getYear = 2019;
+  return getYear - new Date(year).getFullYear()
 
 }
 
 
-// Sort the input given
+// Sort given inputs
 function sortInput(input) {
-  return [...input].sort((a, b) => findAge(a.dob) - findAge(b.dob))
+  return [...input].sort((a, b) => findMembersAge(a.dob) - findMembersAge(b.dob))
 }
 // Group Age
 function groupAge(sortedInput) {
   let groups = [];
-  let latestGroup = [];
+  let newGroup = [];
   let firstAdded;
   sortedInput.forEach((e) => {
-    const age = findAge(e.dob);
+    const age = findMembersAge(e.dob);
     e.age = age;
     if (!firstAdded) {
       firstAdded = e;
     }
-    if (latestGroup.length == 3 || e.age - firstAdded.age > 5) {
-      groups.push(latestGroup);
-      latestGroup = [];
+    if (newGroup.length == 3 || e.age - firstAdded.age > 5) {
+      groups.push(newGroup);
+      newGroup = [];
       firstAdded = e;
     }
-    latestGroup.push(e);
+    newGroup.push(e);
   });
 
-  if (latestGroup.length > 0) {
-    groups.push(latestGroup);
+  if (newGroup.length > 0) {
+    groups.push(newGroup);
   }
   return groups;
 }
 
-// Map group to the outPut
+//loop through the group to get output
 function mapGroup(groups) {
   let output = {
     noOfGroups: 0,
